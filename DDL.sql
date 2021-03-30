@@ -8,7 +8,7 @@ create user 'user'@'localhost' identified by 'pass123';
 grant select, insert, delete, update on forum.* to user@'localhost';
 
   CREATE TABLE usuario (
-  id int(11) NOT NULL auto_increment,
+  id bigint unsigned NOT NULL auto_increment,
   nome varchar(50) NOT NULL,
   email varchar(30) NOT NULL,
   nickname varchar(20) NOT NULL,
@@ -17,7 +17,7 @@ grant select, insert, delete, update on forum.* to user@'localhost';
 
 
 CREATE TABLE post (
-  id int(11) NOT NULL auto_increment,
+  id bigint unsigned NOT NULL auto_increment,
   titulo varchar(50) NOT NULL,
   conteudo varchar(500) NOT NULL,
   usuario int(11) DEFAULT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE post (
 
 
 CREATE TABLE comentario (
-  id int(11) NOT NULL auto_increment,
+  id bigint unsigned NOT NULL auto_increment,
   conteudo varchar(500) NOT NULL,
   post int(11) DEFAULT NULL,
   usuario int(11) DEFAULT NULL,
