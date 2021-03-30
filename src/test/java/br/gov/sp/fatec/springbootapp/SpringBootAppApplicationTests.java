@@ -23,7 +23,7 @@ class SpringBootAppApplicationTests {
         usuario.setNome("Rafael");
         usuario.setEmail("rafael@gmail.com");
         usuario.setNickname("rafa");
-        usuario.save(usuario);
+        usuarioRepo.save(usuario);
 
         assertNotNull(usuario.getId());
     }
