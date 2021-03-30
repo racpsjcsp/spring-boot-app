@@ -20,7 +20,7 @@ CREATE TABLE post (
   id bigint unsigned NOT NULL auto_increment,
   titulo varchar(50) NOT NULL,
   conteudo varchar(500) NOT NULL,
-  usuario int(11) DEFAULT NULL,
+  usuario bigint unsigned DEFAULT NULL,
   PRIMARY KEY (id),
   KEY fk_usuario (usuario),
   CONSTRAINT fk_usuario FOREIGN KEY (usuario) REFERENCES usuario (id)
@@ -30,8 +30,8 @@ CREATE TABLE post (
 CREATE TABLE comentario (
   id bigint unsigned NOT NULL auto_increment,
   conteudo varchar(500) NOT NULL,
-  post int(11) DEFAULT NULL,
-  usuario int(11) DEFAULT NULL,
+  post bigint unsigned DEFAULT NULL,
+  usuario bigint unsigned DEFAULT NULL,
   PRIMARY KEY (id),
   KEY fk_post (post),
   KEY fk_usuario2 (usuario),
