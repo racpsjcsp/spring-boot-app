@@ -27,6 +27,8 @@ class SpringBootAppApplicationTests {
     }
     
     @Test
+    @Transactional
+    @Rollback
     void testaInsercao() {
         Usuario usuario = new Usuario();
         usuario.setNome("Rafael");
@@ -42,7 +44,7 @@ class SpringBootAppApplicationTests {
     @Rollback
     void testaPost() {
         Post post = new Post();
-        Usuario usuario = usuarioRepo.findById(1L).get();
+        Usuario usuario = usuarioRepo.findById(14L).get();
         post.setTitulo("Titulo do Post");
         post.setConteudo("Conteudo do Post");
         post.setUsuario(usuario);
