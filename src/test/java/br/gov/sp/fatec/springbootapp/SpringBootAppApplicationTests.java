@@ -45,11 +45,10 @@ class SpringBootAppApplicationTests {
         Usuario usuario = usuarioRepo.findById(1L).get();
         post.setTitulo("Titulo do Post");
         post.setConteudo("Conteudo do Post");
-        // post.setUsuario(usuario);
+        post.setUsuario(usuario);
         postRepo.save(post);
 
-        assertNotNull(post.getId());
-        // assertEquals("Titulo do Post",usuario.getPosts().iterator().next().getTitulo());
+        assertEquals("Titulo do Post",usuario.getPosts().iterator().next().getTitulo());
     }
 
 }
