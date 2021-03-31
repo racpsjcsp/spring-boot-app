@@ -18,6 +18,8 @@ class SpringBootAppApplicationTests {
 
     @Autowired
     private UsuarioRepository usuarioRepo;
+
+    @Autowired
     private PostRepository postRepo;
 
 	@Test
