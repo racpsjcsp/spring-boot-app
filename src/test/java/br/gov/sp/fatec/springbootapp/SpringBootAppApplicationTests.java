@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.entity.Post;
+import br.gov.sp.fatec.springbootapp.entity.Comment;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import br.gov.sp.fatec.springbootapp.repository.CommentRepository;
 import br.gov.sp.fatec.springbootapp.repository.PostRepository;
 
 
@@ -22,13 +24,16 @@ class SpringBootAppApplicationTests {
     @Autowired
     private PostRepository postRepo;
 
+    @Autowired
+    private CommentRepository commentRepo;
+
 	@Test
 	void contextLoads() {
     }
     
     @Test
-    @Transactional
-    @Rollback
+    // @Transactional
+    // @Rollback
     void testaInsercao() {
         Usuario usuario = new Usuario();
         usuario.setNome("Rafael");
@@ -40,17 +45,31 @@ class SpringBootAppApplicationTests {
     }
 
     @Test
-    @Transactional
-    @Rollback
+    // @Transactional
+    // @Rollback
     void testaPost() {
         Post post = new Post();
-        Usuario usuario = usuarioRepo.findById(14L).get();
+        Usuario usuario = usuarioRepo.findById(4L).get();
         post.setTitulo("Titulo do Post");
         post.setConteudo("Conteudo do Post");
         post.setUsuario(usuario);
         postRepo.save(post);
 
-        assertEquals("Titulo do Post",usuario.getPosts().iterator().next().getTitulo());
+        assertEquals("Titulo do Post", usuario.getPosts().iterator().next().getTitulo());
+    }
+
+    @Test
+    @Transactional
+    // @Rollback
+    void testaComment() {
+        Post post = postRepo.findById(1L).get();
+        Usuario usuario = usuarioRepo.findById(4L).get();
+        Comment comment = new Comment();
+
+        comment.setConteudo("Conteudo do Comment");
+        comment.setUsuario(usuario);
+        comment.setPost(post);
+        commentRepo.save(comment);
     }
 
 }

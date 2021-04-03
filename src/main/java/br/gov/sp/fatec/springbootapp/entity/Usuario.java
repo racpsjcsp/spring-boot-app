@@ -32,7 +32,7 @@ public class Usuario {
 	@Column(name = "nickname")
     private String nickname;
     
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private Set<Post> posts;
 
 	public Long getId() {

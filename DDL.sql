@@ -1,8 +1,10 @@
+drop schema if exists forum;
 
 create schema forum;
 
 use forum;
 
+drop user 'user'@'localhost';
 create user 'user'@'localhost' identified by 'pass123';
 
 grant select, insert, delete, update on forum.* to user@'localhost';
@@ -38,3 +40,13 @@ CREATE TABLE comentario (
   CONSTRAINT fk_post FOREIGN KEY (post) REFERENCES post (id),
   CONSTRAINT fk_usuario2 FOREIGN KEY (usuario) REFERENCES usuario (id)
 );
+
+
+INSERT INTO usuario (nome, email, nickname) 
+VALUES ("Rafael", "rafa@gmail.com", "Rafa");
+
+INSERT INTO post (titulo, conteudo, usuario)
+VALUES ("Meu Post", "Conteudo do Post...", 1);
+
+INSERT INTO comentario (conteudo, post, usuario)
+VALUES ("Conteudo do Comentario...", 1, 1);

@@ -1,6 +1,7 @@
 package br.gov.sp.fatec.springbootapp.entity;
 
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
+import br.gov.sp.fatec.springbootapp.entity.Post;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
@@ -10,21 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.Set;
 
 @Entity
-@Table(name = "post")
-public class Post {
+@Table(name = "comentario")
+public class Comment {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 	private Long id;
 	
-	@Column(name = "titulo")
-    private String titulo;
-    
 	@Column(name = "conteudo")
     private String conteudo;
     
@@ -33,8 +29,9 @@ public class Post {
     @JoinColumn(name = "usuario")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "post")
+    private Post post;
     
     
 	public Long getId() {
@@ -42,12 +39,6 @@ public class Post {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getTitulo() {
-		return titulo;
-	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
 	}
 	public String getConteudo() {
 		return conteudo;
@@ -61,10 +52,10 @@ public class Post {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
     }
-    public Set<Comment> getComments() {
-        return this.comments;
+    public Post getPost() {
+        return post;
     }
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
