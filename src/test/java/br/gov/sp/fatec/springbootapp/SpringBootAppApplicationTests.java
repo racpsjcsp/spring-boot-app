@@ -60,8 +60,17 @@ class SpringBootAppApplicationTests {
         postRepo.save(post);
 
         assertNotNull(post.getId());
-
         assertNotNull(usuario.getPosts().iterator().next().getId());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void testaPost2() {
+        Post post = new Post();
+        Usuario usuario = usuarioRepo.findById(1L).get();
+
+        assertEquals("Conteudo do Post...", usuario.getPosts().iterator().next().getConteudo());
     }
 
     @Test
@@ -78,11 +87,8 @@ class SpringBootAppApplicationTests {
         commentRepo.save(comment);
 
         assertNotNull(comment.getId());
-
         assertNotNull(post.getComments().iterator().next().getId());
-
     }
-
 
      @Test
      @Transactional
@@ -101,10 +107,17 @@ class SpringBootAppApplicationTests {
         postRepo.save(post);
 
         assertNotNull(comment.getId());
-
         assertNotNull(post.getComments().iterator().next().getId());
+    }
 
-        //assertEquals("Conteudo do Comment2", post.getComments().iterator().next().getConteudo());
+     @Test
+     @Transactional
+     @Rollback
+    void testaComment3() {
+        Post post = postRepo.findById(1L).get();
+        Usuario usuario = usuarioRepo.findById(1L).get();
+        Comment comment = new Comment();
 
+        assertEquals("Conteudo do Comentario...", post.getComments().iterator().next().getConteudo());
     }
 }
