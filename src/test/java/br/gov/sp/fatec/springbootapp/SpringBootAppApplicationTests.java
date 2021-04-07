@@ -38,11 +38,18 @@ class SpringBootAppApplicationTests {
     @Test
     @Transactional
     @Rollback
-    void testaInsercao() {
+    void testaInsercaoUsuario() {
         Usuario usuario = new Usuario();
-        usuario.setNome("Rafael");
-        usuario.setEmail("rafael@gmail.com");
-        usuario.setNickname("rafa");
+        usuario.setNome("Augusto");
+        usuario.setEmail("augusto@gmail.com");
+        usuario.setNickname("guto");
+        usuarioRepo.save(usuario);
+
+        assertEquals("Augusto", usuario.getNome());
+    }
+
+    void testaUsuario() {
+        Usuario usuario = usuarioRepo.findById(1L).get();
         usuarioRepo.save(usuario);
 
         assertNotNull(usuario.getId());
@@ -70,7 +77,8 @@ class SpringBootAppApplicationTests {
         Post post = new Post();
         Usuario usuario = usuarioRepo.findById(1L).get();
 
-        assertEquals("Conteudo do Post...", usuario.getPosts().iterator().next().getConteudo());
+        // assertEquals("Conteudo do Post...", usuario.getPosts().iterator().next().getConteudo());
+        assertEquals("Conteudo do Post", usuario.getPosts().iterator().next().getConteudo());
     }
 
     @Test
@@ -90,9 +98,9 @@ class SpringBootAppApplicationTests {
         assertNotNull(post.getComments().iterator().next().getId());
     }
 
-     @Test
-     @Transactional
-     @Rollback
+    @Test
+    @Transactional
+    @Rollback
     void testaComment2() {
         Post post = postRepo.findById(1L).get();
         Usuario usuario = usuarioRepo.findById(1L).get();
@@ -100,8 +108,8 @@ class SpringBootAppApplicationTests {
 
         comment.setConteudo("Conteudo do Comment2");
         comment.setUsuario(usuario);
-        // comment.setPost(post);
         commentRepo.save(comment);
+
         post.setComments(new HashSet<Comment>());
         post.getComments().add(comment);
         postRepo.save(post);
@@ -110,14 +118,51 @@ class SpringBootAppApplicationTests {
         assertNotNull(post.getComments().iterator().next().getId());
     }
 
-     @Test
-     @Transactional
-     @Rollback
-    void testaComment3() {
-        Post post = postRepo.findById(1L).get();
-        Usuario usuario = usuarioRepo.findById(1L).get();
-        Comment comment = new Comment();
+    // @Test
+    // @Transactional
+    // @Rollback
+    // void testaComment3() {
+    //     Post post = postRepo.findById(1L).get();
+    //     Usuario usuario = usuarioRepo.findById(1L).get();
+    //     Comment comment = new Comment();
 
-        assertEquals("Conteudo do Comentario...", post.getComments().iterator().next().getConteudo());
+    //     assertEquals("Conteudo do Comentario...", post.getComments().iterator().next().getConteudo());
+    // }
+
+     @Test
+    // @Transactional
+    // @Rollback
+    void testaBuscaUsuarioNomeContains() {
+        
+        List<Usuario> usuarios = usuarioRepo.findByNomeContainsIgnoreCase("R");
+        assertFalse(usuarios.isEmpty());
     }
+
+    @Test
+    // @Transactional
+    // @Rollback
+    void testaBuscaUsuarioNome() {
+        List<Usuario> usuarios = usuarioRepo.findByNomeContainsIgnoreCase("Rafael");
+
+        assertFalse(usuarios.isEmpty());
+    }
+
+    @Test
+    // @Transactional
+    // @Rollback
+    void testaBuscaUsuarioNomeEmail() {
+        Usuario usuario = usuarioRepo.findByNomeAndEmail("Rafael", "rafa@gmail.com");
+
+        assertNotNull(usuario);
+    }
+
+    @Test
+    // @Transactional
+    // @Rollback
+    void testaBuscaNomePost() {
+        List<Usuario> usuarios = usuarioRepo.findByPostsTitulo("Meu Post");
+
+        assertFalse(usuarios.isEmpty());
+    }
+
 }
