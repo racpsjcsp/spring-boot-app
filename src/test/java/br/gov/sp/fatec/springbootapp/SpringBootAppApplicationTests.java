@@ -77,8 +77,8 @@ class SpringBootAppApplicationTests {
         Post post = new Post();
         Usuario usuario = usuarioRepo.findById(1L).get();
 
-        // assertEquals("Conteudo do Post...", usuario.getPosts().iterator().next().getConteudo());
-        assertEquals("Conteudo do Post", usuario.getPosts().iterator().next().getConteudo());
+        assertEquals("Conteudo do Post...", usuario.getPosts().iterator().next().getConteudo());
+        // assertEquals("Conteudo do Post", usuario.getPosts().iterator().next().getConteudo());
     }
 
     @Test
