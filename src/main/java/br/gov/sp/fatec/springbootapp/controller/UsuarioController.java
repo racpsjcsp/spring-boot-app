@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
 
-    publicList<Usuario> buscarTodos() {
-        
-    }
+//    publicList<Usuario> buscarTodos() {
+//        
+//    }
 }

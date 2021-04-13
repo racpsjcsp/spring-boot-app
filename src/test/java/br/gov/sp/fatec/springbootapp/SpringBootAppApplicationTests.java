@@ -11,6 +11,8 @@ import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.entity.Post;
 import br.gov.sp.fatec.springbootapp.entity.Comment;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import br.gov.sp.fatec.springbootapp.service.PostService;
+import br.gov.sp.fatec.springbootapp.service.UsuarioService;
 import br.gov.sp.fatec.springbootapp.repository.CommentRepository;
 import br.gov.sp.fatec.springbootapp.repository.PostRepository;
 
@@ -30,6 +32,12 @@ class SpringBootAppApplicationTests {
 
     @Autowired
     private CommentRepository commentRepo;
+    
+    @Autowired
+    private PostService postService;
+    
+    @Autowired
+    private UsuarioService usuarioService;
 
 	@Test
 	void contextLoads() {
@@ -61,8 +69,8 @@ class SpringBootAppApplicationTests {
     void testaPost() {
         Post post = new Post();
         Usuario usuario = usuarioRepo.findById(1L).get();
-        post.setTitulo("Titulo do Post");
-        post.setConteudo("Conteudo do Post");
+        post.setTitulo("Titulo do Post3");
+        post.setConteudo("Conteudo do Post3");
         post.setUsuario(usuario);
         postRepo.save(post);
 
@@ -164,5 +172,52 @@ class SpringBootAppApplicationTests {
 
         assertFalse(usuarios.isEmpty());
     }
+    
+    //QUERIES
+    @Test
+    // @Transactional
+    // @Rollback
+    void testaBuscaUsuarioPorNome() {
+       Usuario usuario = usuarioRepo.buscaUsuarioPorNome("Rafael");
 
+       assertNotNull(usuario);
+    }
+    
+    @Test
+    // @Transactional
+    // @Rollback
+    void testaBuscaUsuarioPorNomeEEmail() {
+        Usuario usuario = usuarioRepo.buscaUsuarioPorNomeEEmail("Rafael", "rafa@gmail.com");
+
+        assertNotNull(usuario);
+     }   
+    
+    @Test
+    // @Transactional
+    // @Rollback
+    void testaBuscaPorPostsDoUsuario() {
+        List<Post> posts = usuarioRepo.buscaPorPostsDoUsuario("Rafael");
+
+        assertFalse(posts.isEmpty());
+        assertEquals(1, posts.size());
+    }
+    
+   
+    @Test
+    @Transactional
+    @Rollback
+    void testaServiceCriaPost() {
+    	Post post = postService.criarPost("Post Criado", "Conteudo do Post Criado", "Campos", "campos@gmail.com");
+    	
+    	assertNotNull(post);    	
+    }
+    
+    @Test
+    @Transactional
+    @Rollback
+    void testaServiceCriaUsuario() {
+    	Usuario usuario = usuarioService.criarUsuario("Campos", "campos@gmail.com", "camp");
+    	
+    	assertNotNull(usuario);
+    }
 }
