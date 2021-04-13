@@ -1,7 +1,7 @@
 # spring-boot-app
 
-# Fatec - São José dos Campos
-# Este projeto é parte de um trabalho realizado no curso de Análise e Desenvolvimento de Sistemas
+## Fatec - São José dos Campos
+## Este projeto é parte de um trabalho realizado no curso de Análise e Desenvolvimento de Sistemas
 
 ## Entregas:
 ### 1) Aplicação Spring Boot com acesso a dados usando Spring Data JPA;
