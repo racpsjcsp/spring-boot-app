@@ -14,6 +14,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     public Usuario findByNome(String nome);
     public Usuario findByNomeOrNickname(String nome, String nickname);
     public Usuario findByNomeAndEmail(String nome, String email);
+    public Usuario findByNickname(String nickname);
+    public Usuario findByEmail(String email);
 
     public List<Usuario> findByPostsTitulo(String post);
     
@@ -25,4 +27,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     
     @Query("select p from Usuario u inner join u.posts p where u.nome = ?1")
     public List<Post> buscaPorPostsDoUsuario(String nome);
+    
+
 }

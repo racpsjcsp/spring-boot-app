@@ -1,7 +1,5 @@
 package br.gov.sp.fatec.springbootapp.entity;
 
-import br.gov.sp.fatec.springbootapp.entity.Usuario;
-import br.gov.sp.fatec.springbootapp.entity.Post;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
@@ -9,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
@@ -25,12 +26,14 @@ public class Comment {
     private String conteudo;
     
     // @Column(name = "usuario")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario")
+    @JsonIgnore
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post")
+    @JsonIgnore
     private Post post;
     
     

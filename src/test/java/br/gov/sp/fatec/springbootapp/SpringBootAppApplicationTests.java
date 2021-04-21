@@ -17,7 +17,6 @@ import br.gov.sp.fatec.springbootapp.repository.CommentRepository;
 import br.gov.sp.fatec.springbootapp.repository.PostRepository;
 
 import java.util.List;
-import java.util.LinkedList;
 import java.util.HashSet;
 
 

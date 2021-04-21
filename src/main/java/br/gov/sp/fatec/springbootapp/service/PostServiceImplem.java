@@ -1,5 +1,7 @@
 package br.gov.sp.fatec.springbootapp.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +45,21 @@ public class PostServiceImplem implements PostService {
 		
 		return post;
 	}
-	
 
-	
-	
+	@Override
+	public List<Post> buscarTodosPosts() {
+		// TODO Auto-generated method stub
+		return postRepo.findAll();
+	}
+
+	@Override
+	public Post buscarPostPorTitulo(String titulo) {
+		Post post = postRepo.findPostByTitulo(titulo);
+		if(post != null) {
+			return post;
+		}
+		
+		throw new RuntimeException("Post não encontrado");
+	}
 
 }
