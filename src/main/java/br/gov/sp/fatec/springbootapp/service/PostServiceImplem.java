@@ -61,5 +61,15 @@ public class PostServiceImplem implements PostService {
 		
 		throw new RuntimeException("Post não encontrado");
 	}
+	
+	@Override
+	public List<Post> buscarPostPorUsuario(String nome) {
+		List<Post> posts = postRepo.buscaPostsByUsuario(nome);
+		if(!posts.isEmpty()) {
+			return posts;
+		}
+		
+		throw new RuntimeException("nenhum post encontrado");
+	}
 
 }

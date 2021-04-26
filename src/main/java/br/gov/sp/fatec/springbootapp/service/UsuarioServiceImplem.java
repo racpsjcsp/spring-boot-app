@@ -43,7 +43,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	
 	@Override
 	public Usuario buscarUsuarioPorNome(String nome) {
-		Optional<Usuario> usuarioOpt = Optional.of(usuarioRepo.findByNome(nome)); //usuarioRepo.findByNome(nome);
+		Optional<Usuario> usuarioOpt = usuarioRepo.findByNome(nome); //usuarioRepo.findByNome(nome);
 		
 		if(usuarioOpt.isPresent()) {
 			return usuarioOpt.get();
@@ -73,6 +73,35 @@ public class UsuarioServiceImplem implements UsuarioService {
 		
 		throw new RuntimeException("Usuário não encontrado");
 	}
-	
+
+	@Override
+	public String deletarUsuario(Long id) {
+		Optional<Usuario> usuarioOpt = usuarioRepo.findById(id);
+		
+		if(usuarioOpt.isPresent()) {
+			usuarioRepo.deleteById(id);
+			return "Usuário deletado com sucesso";
+		}
+		
+		throw new RuntimeException("usuário não encontrado");		
+	}
+
+	@Override
+	public Usuario alterarUsuario(Long id, String nome, String nickname, String email) {
+		Optional<Usuario> usuarioOpt = Optional.of(usuarioRepo.buscaUsuarioPorId(id)); //findById(id);
+		
+		if(usuarioOpt.isPresent()) {
+			//usuarioRepo.buscaUsuarioPorId(id);
+			
+			usuarioOpt.get().setNome(nome);
+			usuarioOpt.get().setNickname(nickname);
+			usuarioOpt.get().setEmail(email);
+			usuarioRepo.save(usuarioOpt.get());
+			
+			return usuarioOpt.get();
+		}
+		
+		throw new RuntimeException("usuário não encontrado");
+	}
 	
 }

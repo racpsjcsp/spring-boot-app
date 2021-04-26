@@ -17,4 +17,10 @@ public interface UsuarioService {
 	public Usuario buscarUsuarioPorNickname(String nickname);
 
 	public Usuario buscarUsuarioPorEmail(String email);
+
+	public String deletarUsuario(Long id);
+
+//	public Usuario alterarUsuario(Long id);
+
+	public Usuario alterarUsuario(Long id, String nome, String nickname, String email);
 }

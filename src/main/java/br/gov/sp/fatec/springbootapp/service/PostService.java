@@ -12,4 +12,8 @@ public interface PostService {
 
 	public Post buscarPostPorTitulo(String titulo);
 
+	public List<Post> buscarPostPorUsuario(String nome);
+
+//	public Post criarPost();
+
 }

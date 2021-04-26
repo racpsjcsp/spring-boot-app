@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import br.gov.sp.fatec.springbootapp.entity.Post;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     public List<Usuario> findByNomeContainsIgnoreCase(String nome);
 
-    public Usuario findByNome(String nome);
+    public Optional<Usuario> findByNome(String nome);
     public Usuario findByNomeOrNickname(String nome, String nickname);
     public Usuario findByNomeAndEmail(String nome, String email);
     public Usuario findByNickname(String nickname);
@@ -28,5 +29,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("select p from Usuario u inner join u.posts p where u.nome = ?1")
     public List<Post> buscaPorPostsDoUsuario(String nome);
     
-
+    @Query("select u from Usuario u where u.id = ?1")
+    public Usuario buscaUsuarioPorId(Long id);
 }

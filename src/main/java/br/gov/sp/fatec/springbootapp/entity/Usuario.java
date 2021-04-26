@@ -8,6 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springbootapp.controller.View;
+
 import java.util.Set;
 
 
@@ -21,6 +27,7 @@ public class Usuario {
     @Column(name = "id")
 	private Long id;
 	
+	@JsonView({View.PostResumo.class, View.CommentResumo.class})
 	@Column(name = "nome")
     private String nome;
     
@@ -31,7 +38,12 @@ public class Usuario {
     private String nickname;
     
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Post> posts;
+    
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Comment> comments;
 
 	public Long getId() {
 		return id;
@@ -64,5 +76,13 @@ public class Usuario {
 
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
+    }
+    
+    public Set<Comment> getComments() {
+        return this.comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

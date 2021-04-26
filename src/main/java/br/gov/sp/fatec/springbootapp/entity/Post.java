@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springbootapp.controller.View;
 
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -24,18 +27,21 @@ public class Post {
     @Column(name = "id")
 	private Long id;
 	
+	@JsonView({View.PostResumo.class})
 	@Column(name = "titulo")
     private String titulo;
     
+	@JsonView({View.PostResumo.class})
 	@Column(name = "conteudo")
     private String conteudo;
     
+	@JsonView(View.PostResumo.class)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario")
-    @JsonIgnore
     private Usuario usuario;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Comment> comments;
     
     
