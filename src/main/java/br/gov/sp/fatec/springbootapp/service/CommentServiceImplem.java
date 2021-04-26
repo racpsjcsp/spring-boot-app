@@ -13,6 +13,7 @@ import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.repository.CommentRepository;
 import br.gov.sp.fatec.springbootapp.repository.PostRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import exception.RegistroNaoEncontradoException;
 
 @Service
 public class CommentServiceImplem implements CommentService {
@@ -70,7 +71,7 @@ public class CommentServiceImplem implements CommentService {
 			return comments;
 		}
 		
-		throw new RuntimeException("nenhum comentário encontrado");
+		throw new RegistroNaoEncontradoException("nenhum comentário encontrado");
 	}
 
 	@Override
@@ -81,7 +82,7 @@ public class CommentServiceImplem implements CommentService {
 			return comments;
 		}
 		
-		throw new RuntimeException("nenhum comentário encontrado");
+		throw new RegistroNaoEncontradoException("nenhum comentário encontrado");
 	}
 
 }

@@ -11,6 +11,7 @@ import br.gov.sp.fatec.springbootapp.entity.Post;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.repository.PostRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import exception.RegistroNaoEncontradoException;
 
 
 @Service("postService")
@@ -59,7 +60,7 @@ public class PostServiceImplem implements PostService {
 			return post;
 		}
 		
-		throw new RuntimeException("Post não encontrado");
+		throw new RegistroNaoEncontradoException("Post não encontrado");
 	}
 	
 	@Override
@@ -69,7 +70,7 @@ public class PostServiceImplem implements PostService {
 			return posts;
 		}
 		
-		throw new RuntimeException("nenhum post encontrado");
+		throw new RegistroNaoEncontradoException("nenhum post encontrado");
 	}
 
 }

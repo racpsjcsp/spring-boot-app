@@ -2,6 +2,9 @@ package br.gov.sp.fatec.springbootapp.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.service.UsuarioService;
@@ -51,24 +55,67 @@ public class UsuarioController {
     }
 	
 	@PostMapping
-	public Usuario cadastraNovoUsuario(@RequestBody Usuario usuario) {
-		return usuarioService.criarUsuario(
+	public ResponseEntity<Usuario> cadastraNovoUsuario(@RequestBody Usuario usuario,
+			UriComponentsBuilder uriComponentsBuilder) {
+		usuario = usuarioService.criarUsuario(
 				usuario.getNome(),
 				usuario.getEmail(),
-				usuario.getNickname());
+				usuario.getNickname()
+				);
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.setLocation(
+				uriComponentsBuilder.path(
+						"/usuario/" + usuario.getId()).build().toUri());
+		return new ResponseEntity<Usuario>(usuario, responseHeaders, HttpStatus.CREATED);
 	}
 	
+//	@PutMapping("/altera-nome/{id}")
+//	public Usuario alteraNomeUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+//		return usuarioService.alterarUsuario(
+//				id,
+//				usuario.getNome(),
+//				usuario.getNickname(),
+//				usuario.getEmail()
+//				);	
+//	}
+	
+//	@DeleteMapping(value = "/usuario-deleta/{id}")
+//	public String deletaUsuario(@PathVariable Long id) {
+//		return usuarioService.deletarUsuario(id);		
+//	}
+	
 	@PutMapping("/altera-nome/{id}")
-	public Usuario alteraNomeUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
-		return usuarioService.alterarUsuario(
+	public ResponseEntity<Usuario> alteraNomeUsuario(
+			@PathVariable Long id,
+			@RequestBody Usuario usuario,
+			UriComponentsBuilder uriComponentsBuilder) {
+		
+		usuario = usuarioService.alterarUsuario(
 				id,
 				usuario.getNome(),
 				usuario.getNickname(),
-				usuario.getEmail());	
+				usuario.getEmail()
+				);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		
+		responseHeaders.setLocation(
+				uriComponentsBuilder.path(
+						"/usuario/" + usuario.getId()).build().toUri());
+		
+		return ResponseEntity.ok().headers(responseHeaders).body(usuario);// <Usuario>(usuario, responseHeaders, HttpStatus.NO_CONTENT);
 	}
 	
 	@DeleteMapping(value = "/usuario-deleta/{id}")
-	public String deletaUsuario(@PathVariable Long id) {
-		return usuarioService.deletarUsuario(id);		
+	public ResponseEntity<String> deletaUsuario(
+			@PathVariable Long id,
+			UriComponentsBuilder uriComponentsBuilder) {
+		
+		usuarioService.deletarUsuario(id);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		
+		return ResponseEntity.accepted().headers(responseHeaders).body("Usuário deletado com sucesso");
 	}
+
 }

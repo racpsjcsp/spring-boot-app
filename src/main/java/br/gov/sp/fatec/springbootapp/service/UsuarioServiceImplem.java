@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import exception.RegistroNaoEncontradoException;
 
 @Service("usuarioService")
 public class UsuarioServiceImplem implements UsuarioService {
@@ -38,7 +39,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 			return usuarioOpt.get();
 		}
 		
-		throw new RuntimeException("Usuário não encontrado");
+		throw new RegistroNaoEncontradoException("Usuário não encontrado");
 	}
 	
 	@Override
@@ -49,7 +50,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 			return usuarioOpt.get();
 		}
 		
-		throw new RuntimeException("Usuário não encontrado");
+		throw new RegistroNaoEncontradoException("Usuário não encontrado");
 	}
 	
 	@Override
@@ -60,7 +61,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 			return usuarioOpt.get();
 		}
 		
-		throw new RuntimeException("Usuário não encontrado");
+		throw new RegistroNaoEncontradoException("Usuário não encontrado");
 	}
 	
 	@Override
@@ -71,7 +72,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 			return usuarioOpt.get();
 		}
 		
-		throw new RuntimeException("Usuário não encontrado");
+		throw new RegistroNaoEncontradoException("Usuário não encontrado");
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 			return "Usuário deletado com sucesso";
 		}
 		
-		throw new RuntimeException("usuário não encontrado");		
+		throw new RegistroNaoEncontradoException("usuário não encontrado");		
 	}
 
 	@Override
