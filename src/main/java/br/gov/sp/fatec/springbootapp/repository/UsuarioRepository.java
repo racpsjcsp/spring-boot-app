@@ -17,6 +17,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     public Usuario findByNomeAndEmail(String nome, String email);
     public Usuario findByNickname(String nickname);
     public Usuario findByEmail(String email);
+    public Usuario findByRole(boolean admin);
 
     public List<Usuario> findByPostsTitulo(String post);
     
@@ -31,4 +32,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     
     @Query("select u from Usuario u where u.id = ?1")
     public Usuario buscaUsuarioPorId(Long id);
+    
 }

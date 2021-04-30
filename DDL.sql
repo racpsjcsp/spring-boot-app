@@ -14,6 +14,7 @@ grant select, insert, delete, update on forum.* to user@'localhost';
   nome varchar(50) NOT NULL,
   email varchar(30) NOT NULL,
   nickname varchar(20) NOT NULL,
+  admin boolean NOT NULL,
   PRIMARY KEY (id)
 );
 

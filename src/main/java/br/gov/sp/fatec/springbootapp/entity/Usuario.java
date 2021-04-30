@@ -36,6 +36,9 @@ public class Usuario {
     
 	@Column(name = "nickname")
     private String nickname;
+	
+	@Column(name = "admin")
+	private boolean admin;
     
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -85,4 +88,11 @@ public class Usuario {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
+    
+    public boolean getAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 }
