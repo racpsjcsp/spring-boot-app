@@ -37,8 +37,11 @@ public class Usuario {
 	@Column(name = "nickname")
     private String nickname;
 	
-	@Column(name = "admin")
-	private boolean admin;
+	@Column(name = "role")
+	private String role;
+	
+	@Column(name = "senha")
+	private String senha;
     
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -89,10 +92,17 @@ public class Usuario {
         this.comments = comments;
     }
     
-    public boolean getAdmin() {
-		return admin;
+    public String getRole() {
+		return role;
 	}
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 }

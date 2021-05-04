@@ -50,6 +50,8 @@ class SpringBootAppApplicationTests {
         usuario.setNome("Augusto");
         usuario.setEmail("augusto@gmail.com");
         usuario.setNickname("guto");
+        usuario.setRole("ROLE_ADMIN");
+        usuario.setSenha("admin");
         usuarioRepo.save(usuario);
 
         assertEquals("Augusto", usuario.getNome());
@@ -125,16 +127,16 @@ class SpringBootAppApplicationTests {
         assertNotNull(post.getComments().iterator().next().getId());
     }
 
-    // @Test
-    // @Transactional
-    // @Rollback
-    // void testaComment3() {
-    //     Post post = postRepo.findById(1L).get();
-    //     Usuario usuario = usuarioRepo.findById(1L).get();
-    //     Comment comment = new Comment();
-
-    //     assertEquals("Conteudo do Comentario...", post.getComments().iterator().next().getConteudo());
-    // }
+//    // @Test
+//    // @Transactional
+//    // @Rollback
+//    // void testaComment3() {
+//    //     Post post = postRepo.findById(1L).get();
+//    //     Usuario usuario = usuarioRepo.findById(1L).get();
+//    //     Comment comment = new Comment();
+//
+//    //     assertEquals("Conteudo do Comentario...", post.getComments().iterator().next().getConteudo());
+//    // }
 
      @Test
     // @Transactional
@@ -155,8 +157,6 @@ class SpringBootAppApplicationTests {
     }
 
     @Test
-    // @Transactional
-    // @Rollback
     void testaBuscaUsuarioNomeEmail() {
         Usuario usuario = usuarioRepo.findByNomeAndEmail("Rafael", "rafa@gmail.com");
 
@@ -164,8 +164,6 @@ class SpringBootAppApplicationTests {
     }
 
     @Test
-    // @Transactional
-    // @Rollback
     void testaBuscaNomePost() {
         List<Usuario> usuarios = usuarioRepo.findByPostsTitulo("Meu Post");
 
@@ -174,26 +172,22 @@ class SpringBootAppApplicationTests {
     
     //QUERIES
     @Test
-    // @Transactional
-    // @Rollback
     void testaBuscaUsuarioPorNome() {
        Usuario usuario = usuarioRepo.buscaUsuarioPorNome("Rafael");
 
        assertNotNull(usuario);
     }
     
-    @Test
+//    @Test
     // @Transactional
     // @Rollback
-    void testaBuscaUsuarioPorNomeEEmail() {
-        Usuario usuario = usuarioRepo.buscaUsuarioPorNomeEEmail("Rafael", "rafa@gmail.com");
-
-        assertNotNull(usuario);
-     }   
+//    void testaBuscaUsuarioPorNomeEEmail() {
+//        Usuario usuario = usuarioRepo.buscaUsuarioPorNomeEEmail("Rafael", "rafa@gmail.com");
+//
+//        assertNotNull(usuario);
+//     }   
     
     @Test
-    // @Transactional
-    // @Rollback
     void testaBuscaPorPostsDoUsuario() {
         List<Post> posts = usuarioRepo.buscaPorPostsDoUsuario("Rafael");
 
@@ -215,7 +209,7 @@ class SpringBootAppApplicationTests {
     @Transactional
     @Rollback
     void testaServiceCriaUsuario() {
-    	Usuario usuario = usuarioService.criarUsuario("Campos", "campos@gmail.com", "camp");
+    	Usuario usuario = usuarioService.criarUsuario("Campos", "campos@gmail.com", "camp", "ROLE_ADMIN", "admin");
     	
     	assertNotNull(usuario);
     }

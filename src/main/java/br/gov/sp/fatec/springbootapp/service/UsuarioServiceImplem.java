@@ -2,8 +2,13 @@ package br.gov.sp.fatec.springbootapp.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
@@ -16,17 +21,24 @@ public class UsuarioServiceImplem implements UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepo;
 	
+	@Autowired
+	private PasswordEncoder passEncoder;	
+	
 	@Override
-	public Usuario criarUsuario(String nome, String email, String nickname) {
+	public Usuario criarUsuario(String nome, String email, String nickname, String role, String senha) {
 		Usuario usuario = new Usuario();
 		usuario.setNome(nome);
 		usuario.setEmail(email);
 		usuario.setNickname(nickname);
+		usuario.setRole(role);
+		usuario.setSenha(passEncoder.encode(senha));
+
 		usuarioRepo.save(usuario);
 		return usuario;
 	}
 	
 	@Override
+	@PreAuthorize("isAuthenticated()")
 	public List<Usuario> buscarTodosUsuarios() {
 		return usuarioRepo.findAll();
 	}
@@ -44,10 +56,11 @@ public class UsuarioServiceImplem implements UsuarioService {
 	
 	@Override
 	public Usuario buscarUsuarioPorNome(String nome) {
-		Optional<Usuario> usuarioOpt = usuarioRepo.findByNome(nome); //usuarioRepo.findByNome(nome);
+//		Optional<Usuario> usuarioOpt = usuarioRepo.findByNome(nome);
+		Usuario usuarioOpt = usuarioRepo.findByNome(nome); //usuarioRepo.findByNome(nome);
 		
-		if(usuarioOpt.isPresent()) {
-			return usuarioOpt.get();
+		if(usuarioOpt != null) {
+			return usuarioOpt;
 		}
 		
 		throw new RegistroNaoEncontradoException("Usuário não encontrado");
@@ -76,6 +89,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String deletarUsuario(Long id) {
 		Optional<Usuario> usuarioOpt = usuarioRepo.findById(id);
 		
@@ -88,7 +102,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	}
 
 	@Override
-	public Usuario alterarUsuario(Long id, String nome, String nickname, String email) {
+	public Usuario alterarUsuario(Long id, String nome, String nickname, String email, String role, String senha) {
 		Optional<Usuario> usuarioOpt = Optional.of(usuarioRepo.buscaUsuarioPorId(id)); //findById(id);
 		
 		if(usuarioOpt.isPresent()) {
@@ -105,4 +119,32 @@ public class UsuarioServiceImplem implements UsuarioService {
 		throw new RuntimeException("usuário não encontrado");
 	}
 	
+	@Override	
+	public Usuario buscarUsuarioPorRole(String role) {
+		Optional<Usuario> usuarioOpt = Optional.of(usuarioRepo.findByRole(role));
+		
+		if(usuarioOpt.isPresent()) {
+			return usuarioOpt.get();
+		}
+		
+		throw new RegistroNaoEncontradoException("Usuário não encontrado");
+	}
+
+	
+
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+		Usuario usuario = usuarioRepo.findByNome(username);
+		
+		if (usuario == null) {
+			throw new UsernameNotFoundException("Usuário "+ usuario +" não encontrado");
+		}
+		
+		return User
+				.builder()
+				.username(username)
+				.password(usuario.getSenha()).roles("ROLE_ADMIN").build();
+	}
 }

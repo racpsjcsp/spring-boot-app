@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +61,9 @@ public class UsuarioController {
 		usuario = usuarioService.criarUsuario(
 				usuario.getNome(),
 				usuario.getEmail(),
-				usuario.getNickname()
+				usuario.getNickname(),
+				usuario.getRole(),
+				usuario.getSenha()
 				);
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.setLocation(
@@ -94,7 +97,9 @@ public class UsuarioController {
 				id,
 				usuario.getNome(),
 				usuario.getNickname(),
-				usuario.getEmail()
+				usuario.getEmail(),
+				usuario.getRole(),
+				usuario.getSenha()
 				);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -107,6 +112,7 @@ public class UsuarioController {
 	}
 	
 	@DeleteMapping(value = "/usuario-deleta/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> deletaUsuario(
 			@PathVariable Long id,
 			UriComponentsBuilder uriComponentsBuilder) {

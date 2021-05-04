@@ -12,12 +12,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     public List<Usuario> findByNomeContainsIgnoreCase(String nome);
 
-    public Optional<Usuario> findByNome(String nome);
+//    public Optional<Usuario> findByNome(String nome);
+    public Usuario findByNome(String nome);
     public Usuario findByNomeOrNickname(String nome, String nickname);
     public Usuario findByNomeAndEmail(String nome, String email);
     public Usuario findByNickname(String nickname);
-    public Usuario findByEmail(String email);
-    public Usuario findByRole(boolean admin);
+    public Usuario findByEmail(String email);    
 
     public List<Usuario> findByPostsTitulo(String post);
     
@@ -32,5 +32,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     
     @Query("select u from Usuario u where u.id = ?1")
     public Usuario buscaUsuarioPorId(Long id);
+    
+//    @Query("select u from Usuario u where u.role = ?1")
+    public Usuario findByRole(String role);
     
 }
