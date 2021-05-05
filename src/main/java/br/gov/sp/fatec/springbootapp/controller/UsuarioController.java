@@ -30,6 +30,7 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 	
 	@GetMapping
+	@PreAuthorize("isAuthenticated()")
     public List<Usuario> buscarTodosUsuarios() {
         return usuarioService.buscarTodosUsuarios();
     }
@@ -71,21 +72,7 @@ public class UsuarioController {
 						"/usuario/" + usuario.getId()).build().toUri());
 		return new ResponseEntity<Usuario>(usuario, responseHeaders, HttpStatus.CREATED);
 	}
-	
-//	@PutMapping("/altera-nome/{id}")
-//	public Usuario alteraNomeUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
-//		return usuarioService.alterarUsuario(
-//				id,
-//				usuario.getNome(),
-//				usuario.getNickname(),
-//				usuario.getEmail()
-//				);	
-//	}
-	
-//	@DeleteMapping(value = "/usuario-deleta/{id}")
-//	public String deletaUsuario(@PathVariable Long id) {
-//		return usuarioService.deletarUsuario(id);		
-//	}
+
 	
 	@PutMapping("/altera-nome/{id}")
 	public ResponseEntity<Usuario> alteraNomeUsuario(

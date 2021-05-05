@@ -38,12 +38,13 @@ public class UsuarioServiceImplem implements UsuarioService {
 	}
 	
 	@Override
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<Usuario> buscarTodosUsuarios() {
 		return usuarioRepo.findAll();
 	}
 
 	@Override
+	@PreAuthorize("hasAnyRole('ADMIN, USER')")
 	public Usuario buscarUsuarioPorId(Long id) {
 		Optional<Usuario> usuarioOpt = usuarioRepo.findById(id);
 		
@@ -130,9 +131,6 @@ public class UsuarioServiceImplem implements UsuarioService {
 		throw new RegistroNaoEncontradoException("Usuário não encontrado");
 	}
 
-	
-
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
@@ -145,6 +143,6 @@ public class UsuarioServiceImplem implements UsuarioService {
 		return User
 				.builder()
 				.username(username)
-				.password(usuario.getSenha()).roles("ROLE_ADMIN").build();
+				.password(usuario.getSenha()).authorities(usuario.getRole()).build();
 	}
 }
