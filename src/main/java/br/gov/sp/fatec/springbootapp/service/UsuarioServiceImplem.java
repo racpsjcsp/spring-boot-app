@@ -56,6 +56,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	}
 	
 	@Override
+	@PreAuthorize("hasAnyRole('ADMIN, USER')")
 	public Usuario buscarUsuarioPorNome(String nome) {
 //		Optional<Usuario> usuarioOpt = usuarioRepo.findByNome(nome);
 		Usuario usuarioOpt = usuarioRepo.findByNome(nome); //usuarioRepo.findByNome(nome);
@@ -68,6 +69,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	}
 	
 	@Override
+	@PreAuthorize("hasAnyRole('ADMIN, USER')")
 	public Usuario buscarUsuarioPorNickname(String nickname) {
 		Optional<Usuario> usuarioOpt = Optional.of(usuarioRepo.findByNickname(nickname));
 		
@@ -79,6 +81,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	}
 	
 	@Override
+	@PreAuthorize("hasAnyRole('ADMIN, USER')")
 	public Usuario buscarUsuarioPorEmail(String email) {
 		Optional<Usuario> usuarioOpt = Optional.of(usuarioRepo.findByEmail(email));
 		
@@ -103,6 +106,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Usuario alterarUsuario(Long id, String nome, String nickname, String email, String role, String senha) {
 		Optional<Usuario> usuarioOpt = Optional.of(usuarioRepo.buscaUsuarioPorId(id)); //findById(id);
 		
