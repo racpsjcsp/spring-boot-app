@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.Date;
 
 import org.springframework.boot.json.JsonParseException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -45,7 +47,7 @@ public class JwtUtils {
 				.compact();
 		}
 
-	public static User parseToken(String token)
+	public static Authentication parseToken(String token)
 			throws JsonParseException, JsonMappingException, IOException {
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -58,11 +60,17 @@ public class JwtUtils {
 		
 		Login usuario = mapper.readValue(credentialsJson, Login.class);
 		
-		return (User) User.builder()
+		UserDetails userDetails = User.builder()
 				.username(usuario.getUsername())
 				.password("senha")
 				.authorities(usuario.getAutorizacao())
 				.build();
+		
+		return new UsernamePasswordAuthenticationToken
+				(usuario.getUsername(),
+				usuario.getPassword(),
+				userDetails.getAuthorities()
+				);
 		}
 
 }
