@@ -58,8 +58,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	@Override
 	@PreAuthorize("hasAnyRole('ADMIN, USER')")
 	public Usuario buscarUsuarioPorNome(String nome) {
-//		Optional<Usuario> usuarioOpt = usuarioRepo.findByNome(nome);
-		Usuario usuarioOpt = usuarioRepo.findByNome(nome); //usuarioRepo.findByNome(nome);
+		Usuario usuarioOpt = usuarioRepo.findByNome(nome);
 		
 		if(usuarioOpt != null) {
 			return usuarioOpt;
@@ -110,9 +109,7 @@ public class UsuarioServiceImplem implements UsuarioService {
 	public Usuario alterarUsuario(Long id, String nome, String nickname, String email, String role, String senha) {
 		Optional<Usuario> usuarioOpt = Optional.of(usuarioRepo.buscaUsuarioPorId(id)); //findById(id);
 		
-		if(usuarioOpt.isPresent()) {
-			//usuarioRepo.buscaUsuarioPorId(id);
-			
+		if(usuarioOpt.isPresent()) {			
 			usuarioOpt.get().setNome(nome);
 			usuarioOpt.get().setNickname(nickname);
 			usuarioOpt.get().setEmail(email);

@@ -38,7 +38,6 @@ public class JwtUtils {
 		Date agora = new Date();
 		Long hora = 1000L * 60L * 60L;
 		
-		//retorna um token (string)
 		return Jwts.builder().claim("userDetails", usuarioJson)
 				.setIssuer("br.gov.sp.fatec")
 				.setSubject(usuario.getName())
